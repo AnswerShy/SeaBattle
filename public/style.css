@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@500&display=swap');
+/* :root 
+{
+    --bgColDim: #1c2a39;
+    --bgCol: #2c3a49;
+    --accCol: #c5d3e2;
+    --accColDim: #8c9aa9;
+} */
+
+:root 
+{
+    --fieldCol: #eef0f1;
+    --penCol: rgba(5, 7, 141, 0.823);
+    --bgColDim: #023859;
+    --bgCol: #01262e;
+    --accCol: #83a605;
+    --accColDim: #025959;
+}
+
+*{
+    user-select: none;
+    text-align: center;
+    font-size: larger;
+    margin: 0;
+    
+    color: rgb(255, 255, 255);
+    font-family: 'Overpass Mono', monospace;
+}
+
+body {
+    overflow: hidden;
+    display: grid;
+    grid-template-areas: "a a a";
+    grid-template-columns: 40% auto 40%;
+    justify-items: center;
+    background-color: var(--bgCol);
+}
+
+logo h2 {
+    transform: translate(50%, 50%);
+    position: absolute;
+}
+logo h2:nth-child(1) {
+    -webkit-text-stroke: 1% white;
+    color: transparent;
+}
+logo h2:nth-child(2) {
+
+    color: rgb(196, 231, 253);
+    animation: logo 4s linear infinite;
+}
+
+@keyframes logo {
+    0%, 100% {
+        clip-path: polygon(0 8%, 7% 6%, 14% 5%, 21% 5%, 28% 6%, 34% 8%, 40% 12%,
+         46% 17%, 50% 20%, 54% 23%, 60% 25%, 66% 26%, 70% 26%, 77% 25%, 83% 23%,
+          89% 21%, 95% 19%, 100% 17%, 100% 100%, 0% 100%);
+    }
+    50% {
+        clip-path: polygon(0 15%, 9% 21%, 14% 23%, 18% 25%, 21% 26%, 30% 28%,
+         32% 28%, 40% 27%, 46% 26%, 52% 23%, 57% 19%, 62% 15%, 68% 11%, 73% 8%,
+          79% 6%, 86% 5%, 93% 5%, 100% 6%, 100% 100%, 0% 100%);
+    }
+}
+name {
+    grid-column: 2;
+}
+menu {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+input {
+    color: white;
+    height: fit-content;
+    background-color: transparent;
+    border: 0;
+}
+
+input:hover {
+    color: var(--accColDim);
+    text-shadow: 2px 2px var(--accColDim);
+    cursor: pointer;
+}
+
+table {
+    background-color: transparent;
+    border-collapse: collapse;
+}
+.field {
+    height: fit-content;
+    padding: 5px;
+    background-image: url("textures/paper.jpg");
+    background-size: contain;
+    background-color: black;
+}
+td {
+    color: black;
+    font-size: 15px;
+    border: 2px solid var(--penCol);
+    height: 38px;
+    width: 38px;
+}
+
+
+.ship {
+    position: relative;
+    margin: 5px;
+    height: 37px;
+    width: 37px;
+    background-image: url("textures/ship.png");
+    background-repeat: repeat;
+    background-size: contain;
+    /* background-color: var(--bgColDim); */
+}
+.selectedShip {
+    transition: 0.1s;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+.onMapShip {
+    transition: 0.1s;
+    transform: translate(-5px, -23px);
+    display: block;
+    position: absolute !important;
+}
+.shiped {
+    background-image: url("textures/ship.png");
+    background-size: contain;
+}
+.enemyShiped {
+    color: black;
+}
+.damaged {
+    color: red;
+}
+.wrongPlace {
+    transition: 0.1s;
+    background-color: rgba(255, 0, 0, 0.721);
+}
+.row-2 {
+    width: 79px;
+}
+.row-3 {
+    width: 120px;
+}
+.row-4 {
+    width: 161px;
+}
+
+.madalM {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+}
+
+.mMenu {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 20% 10% 10% 50% 10%;
+    z-index: 1;
+    top: 6%;
+    left: 33vw;
+    background-color: var(--bgCol);
+    height: 600px;
+    width: 500px;
+}
+.mLeaderBoard {
+    display: none;
+    grid-template-columns: 100%;
+    grid-template-rows: 90% 10%;
+    z-index: 2;
+    top: 6%;
+    left: 33vw;
+    background-color: var(--bgCol);
+    height: 600px;
+    width: 500px;
+}
+#buttonLB {
+    grid-row: 5;
+}
+#backButtonLB {
+    grid-row: 2;
+}
+#playerName {
+    width: 75%;
+    border: var(--fieldCol) 2px solid;
+} 
+
+@media (max-width: 1225px) {
+    body {
+        overflow-y: scroll;
+        grid-template-columns: 100%;
+        grid-template-rows: 0 auto auto auto;
+        grid-gap: 5px;
+    }
+
+    #p {
+        grid-column: 1 !important;
+        grid-row: 3 !important;
+    }
+    #m {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+    }
+    #e {
+        grid-column: 1 !important;
+        grid-row: 4 !important;
+    }
+    .madalM {
+        padding: 0;
+    }
+    logo h2 {
+        transform: translate(25%, 0);
+        position: absolute;
+    }
+    .mMenu {
+        height: 100%;
+        width: 100%;
+    }
+    name {
+        display: none;
+    }
+}

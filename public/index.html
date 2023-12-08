@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
+    <title>SeaBattle</title>
+</head>
+<body>
+    <div class="madalM">
+        <div class="mMenu">
+            <logo><h2>SeaBattle</h2><h2>SeaBattle</h2></logo>
+            <input play="human" type="button" value="play w/ human" />
+            <input play="bot" type="button" value="play w/ bot"/>
+            <div>
+                <a style="font-size: smaller;">input your name: </a>
+                <input type="text" id="playerName"/>
+            </div>
+            <input id="buttonLB" type="button" value="LeaderBoard"/>
+        </div>
+        <div class="mLeaderBoard">
+            <div id="leaderboard"></div>
+            <input id="backButtonLB" type="button" value="Back"/>
+        </div>
+    </div>
+    <name>SeaBattle</name>
+    <div class="field" id="p" player="player" style="grid-row: 2; grid-column: 1;"></div>
+    <div class="menu" id="m" style="grid-row: 2; grid-column: 2;">
+        <input id="generatePlayerField" type="button" value="GenerateMyField"/>
+        <input id="startButton" type="button" value="start"/>
+       <div class="arsenal"><p>Arsenal</p></div>
+    </div>
+    <div class="field" id="e" player="enemy" style="grid-row: 2; grid-column: 3;"></div>
+</body>
+<script src="scripts/jquery-3.7.1.min.js"></script>
+<script src="scripts/NoEngineScripts/leaderboard.js" defer></script>
+<script src="scripts/P_PlayerInfo.js" defer></script>
+<script src="scripts/E_PlayerInfo.js" defer></script>
+<script src="scripts/core.js" defer></script>
+<script src="scripts/NoEngineScripts/fieldRender.js" defer></script>
+<script src="scripts/gameWithBot.js" defer></script>
+<script src="scripts/ship.js" defer></script>
+<script src="scripts/NoEngineScripts/mainMenu.js" defer></script>
+<script src="scripts/mouseEvents.js" defer></script>
+</html>
