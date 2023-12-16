@@ -12,26 +12,45 @@
             <logo><h2>SeaBattle</h2><h2>SeaBattle</h2></logo>
             <input play="human" type="button" value="play w/ human" />
             <input play="bot" type="button" value="play w/ bot"/>
-            <div>
-                <a style="font-size: smaller;">input your name: </a>
-                <input type="text" id="playerName"/>
-            </div>
             <input id="buttonLB" type="button" value="LeaderBoard"/>
         </div>
         <div class="mLeaderBoard">
             <div id="leaderboard"></div>
             <input id="backButtonLB" type="button" value="Back"/>
         </div>
+        <div class="mMultiplayer">
+            <div>
+                <a style="font-size: smaller;">input your name: </a>
+                <input type="text" id="playerName"/>
+            </div>
+            <a id="wrongNick">Wrong nickname</a>
+            <input id="multiplayerNext" type="button" value="Next"/>
+            <input id="backButtonMulti" type="button" value="Back"/>
+        </div>
+        <div class="mLobbySearch">
+            <a>Your lobby code: </a>
+            <a id="lobbyCode"></a>
+            <a>Enter other lobby code:</a>
+            <input id="enterToLobby" type="text"/>
+            <input id="enterToLobbyAccept" type="button" value="Join"/>
+        </div>
+        <div class="mLobby">
+            <a id="playerList"></a>
+            <input id="startLobbyGame" type="button" value="Start"/>
+            <input id="backToLobbySearch" type="button" value="Back"/>
+        </div>
     </div>
+
     <name>SeaBattle</name>
     <div class="field" id="p" player="player" style="grid-row: 2; grid-column: 1;"></div>
     <div class="menu" id="m" style="grid-row: 2; grid-column: 2;">
         <input id="generatePlayerField" type="button" value="GenerateMyField"/>
-        <input id="startButton" type="button" value="start"/>
+        <input id="startButton" type="button" value="ready"/>
        <div class="arsenal"><p>Arsenal</p></div>
     </div>
     <div class="field" id="e" player="enemy" style="grid-row: 2; grid-column: 3;"></div>
 </body>
+<script src="/socket.io/socket.io.js" defer></script>
 <script src="scripts/jquery-3.7.1.min.js"></script>
 <script src="scripts/NoEngineScripts/leaderboard.js" defer></script>
 <script src="scripts/P_PlayerInfo.js" defer></script>
@@ -39,6 +58,7 @@
 <script src="scripts/core.js" defer></script>
 <script src="scripts/NoEngineScripts/fieldRender.js" defer></script>
 <script src="scripts/gameWithBot.js" defer></script>
+<script src="scripts/gameWithHuman.js" defer></script>
 <script src="scripts/ship.js" defer></script>
 <script src="scripts/NoEngineScripts/mainMenu.js" defer></script>
 <script src="scripts/mouseEvents.js" defer></script>

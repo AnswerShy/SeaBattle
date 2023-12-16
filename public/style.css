@@ -22,9 +22,9 @@
     text-align: center;
     font-size: larger;
     margin: 0;
-    
     color: rgb(255, 255, 255);
     font-family: 'Overpass Mono', monospace;
+    border-radius: 10px;
 }
 
 body {
@@ -35,10 +35,8 @@ body {
     justify-items: center;
     background-color: var(--bgCol);
 }
-
-logo h2 {
-    transform: translate(50%, 50%);
-    position: absolute;
+logo {
+    transform: translate(0, -25%);
 }
 logo h2:nth-child(1) {
     -webkit-text-stroke: 1% white;
@@ -63,6 +61,8 @@ logo h2:nth-child(2) {
     }
 }
 name {
+    font-size: 5vh;
+    padding: 10px;
     grid-column: 2;
 }
 menu {
@@ -77,10 +77,20 @@ input {
     border: 0;
 }
 
-input:hover {
+input[type="text"] {
+    width: 98%;
+    font-size: 4vh;
+    outline: none;
+    border-bottom: var(--fieldCol) 2px solid;
+}
+
+input[type="button"]:hover {
     color: var(--accColDim);
     text-shadow: 2px 2px var(--accColDim);
     cursor: pointer;
+}
+#lobbyCode {
+    user-select: all;
 }
 
 table {
@@ -94,14 +104,34 @@ table {
     background-size: contain;
     background-color: black;
 }
+.readyField  {
+    animation: ready 4s linear infinite;
+}
+@keyframes ready {
+    0%, 100% {
+        background-color: var(--accCol);
+    }
+    50% {
+        background-color: transparent;
+    }
+}
+.ismove {
+    outline: 5px solid;
+    outline-color: rgba(7,212,113,1);
+    animation: ismove 5s infinite;
+}
+@keyframes ismove {
+    50% {
+        outline-color: transparent;
+    }
+}
 td {
     color: black;
-    font-size: 15px;
+    font-size: x-large;
     border: 2px solid var(--penCol);
     height: 38px;
     width: 38px;
 }
-
 
 .ship {
     position: relative;
@@ -151,7 +181,8 @@ td {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    position: absolute;
+    position: fixed;
+    z-index: 1;
     display: flex;
     justify-content: center;
     padding: 50px;
@@ -179,16 +210,56 @@ td {
     height: 600px;
     width: 500px;
 }
+.mMultiplayer {
+    display: none;
+    grid-template-columns: 100%;
+    grid-template-rows: 20% 10% 10% 50% 10%;
+    z-index: 1;
+    top: 6%;
+    left: 33vw;
+    background-color: var(--bgCol);
+    height: 600px;
+    width: 500px;
+}
+#wrongNick {
+    display: none;
+    color: red;
+}
+.mLobbySearch {
+    display: none;
+    grid-template-columns: 100%;
+    grid-template-rows: 20% 10% 20% 10%;
+    z-index: 1;
+    top: 6%;
+    left: 33vw;
+    background-color: var(--bgCol);
+    height: 600px;
+    width: 500px;
+}
+.mLobby {
+    display: none;
+    grid-template-columns: 100%;
+    grid-template-rows: 80% 10% 10%;
+    z-index: 1;
+    top: 6%;
+    left: 33vw;
+    background-color: var(--bgCol);
+    height: 600px;
+    width: 500px;
+}
+
+#backToLobbySearch {
+    grid-row: 3;
+}
 #buttonLB {
     grid-row: 5;
 }
 #backButtonLB {
     grid-row: 2;
 }
-#playerName {
-    width: 75%;
-    border: var(--fieldCol) 2px solid;
-} 
+#startLobbyGame {
+    display: none;
+}
 
 @media (max-width: 1225px) {
     body {
@@ -211,17 +282,19 @@ td {
         grid-row: 4 !important;
     }
     .madalM {
+        height: 100%;
         padding: 0;
     }
-    logo h2 {
-        transform: translate(25%, 0);
-        position: absolute;
-    }
-    .mMenu {
+    .mMenu, .mLeaderBoard, .mMultiplayer, .mLobbySearch, .mLobby  {
         height: 100%;
         width: 100%;
     }
     name {
         display: none;
+    }
+    input[type="text"] {
+        font-size: 2vh;
+        outline: none;
+        border-bottom: var(--fieldCol) 2px solid;
     }
 }

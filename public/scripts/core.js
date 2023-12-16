@@ -4,8 +4,10 @@ var playerGenerateChecker = false //Визначення, чи не генеру
 var playerGenerateIs = false //Визначення, згенеровано поле гравця чи ні
 var enemyCount = 0 //Визначення рахунку противника
 var playerCount = 0 //Визначення рахунку гравця
-
-
+var isGameContinue = false
+var readyCount = 0
+var isPlayerMove = false
+var urReady = false
 
 function randomShipPlaceGenerate(player) {
     for(let size = 4; size > -1; size--){
@@ -76,7 +78,6 @@ function canIPlace(e, curShip, player, size, dir) {
         var x = parseInt(e)
         var y = parseInt(curShip)
         size++
-        console.log(size)
         if(dir == 0){
             if(x+size > 10) {
                 return false
@@ -218,14 +219,12 @@ function canIPlace(e, curShip, player, size, dir) {
             for(var i = -1; i <= size; i++)
             {
                 if(y+size > 10 && x+1 > 9){
-                    console.log(y+size)
                     return false
                 }
                 if(battlefield[y][x] != null) {
                     return false
                 }
                 if (y+i < 10 && x-1 > -1 && x+1 < 10){
-                    console.log("ss")
                     if(battlefield[y+i][x] != null || battlefield[y+i][x+1] != null || battlefield[y+i][x-1] != null) {
                         return false
                     }
@@ -235,18 +234,16 @@ function canIPlace(e, curShip, player, size, dir) {
         }
     }
 }
-
 document.getElementById("generatePlayerField").addEventListener('click', randomShipPlaceGenerate)
-
 document.querySelector("#startButton").addEventListener('click', () => {
     if(startButton()){
+        document.querySelector("#startButton").style.display = "none"
         stepOfGame = 1
         if (gameMode == "bot") {
             isGameWBotStart()
         }
     }
 })
-
 function startButton() {
     var countSS = 0
     shipInfo.forEach((element) => {
@@ -262,40 +259,43 @@ function startButton() {
             elem.style.display = "none"
         })
         playerFieldRender("player")
+        readyField("player")
+        if(gameMode == "human") {
+            socket.emit(`readyCheck`, curId, readyCount)
+        }
+        urReady = true
         return true
     }
-    else if(countSS == 10) {
-        return true
-    }
-    else {
+    else if(!urReady) {
         alert("There is not all ships on field")
         return false
     }
+    else {
+        alert("Not all players ready")
+    }
 }
-
-
-
 function gameEnd() {
     if(playerCount == 20) {
         stepOfGame = 3
         playerFieldRender("enemy")
         alert("You win")
-        console.log("win")
+        if(gameMode == "human") {
+            socket.emit("win", curId, p_nickname)
+        }
+        document.querySelector("#startButton").style.display = "block"
         document.querySelector(".madalM").style.display = "flex"
     }
     else if(enemyCount == 20) {
         stepOfGame = 3
         playerFieldRender("enemy")
         alert("You lose")
-        console.log("lose")
+        document.querySelector("#startButton").style.display = "block"
         document.querySelector(".madalM").style.display = "flex"
     }
 }
-
-
 document.querySelector("[player=enemy]").addEventListener("click", (e)=> {
     if (e.target.tagName == "TD") {
-        if(isGameContinue && stepOfGame == 1) {
+        if(isGameContinue && stepOfGame == 1 && gameMode == "bot") {
             var eX = e.target.getAttribute("x")
             var eY = e.target.getAttribute("y")
             let td = document.querySelector(`[player="enemy"]`).querySelector(`[x="${eX}"][y="${eY}"]`)
@@ -314,10 +314,19 @@ document.querySelector("[player=enemy]").addEventListener("click", (e)=> {
                 gameEnd()
             } 
         }
+        else if (gameMode == "human"){
+            var eX = e.target.getAttribute("x")
+            var eY = e.target.getAttribute("y")
+            if(!isPlayerMove && battlefieldEnemy[eY][eX] == null) {
+                battlefieldEnemy[eY][eX] = "o"
+                socket.emit("move", curId, eX, eY)
+                isPlayerMove = false
+                playerMove()
+            }
+            gameEnd()
+        }
     }
 })
-
-
 function randomAttack(){
     var isGoing = true
     while(isGoing) {
@@ -341,4 +350,30 @@ function randomAttack(){
         }
     }
 }
-
+function playerMove() {
+    if(isPlayerMove) {
+        document.querySelector(`[player="enemy"]`).classList = "field"
+        document.querySelector(`[player="player"]`).classList = "field ismove"
+    }
+    else {
+        document.querySelector(`[player="enemy"]`).classList = "field ismove"
+        document.querySelector(`[player="player"]`).classList = "field"
+    }
+}
+function reFiller() {
+    for(let y = 0; y < 10; y++){
+        for(let x = 0; x < 10; x++){
+            battlefield[9-y][x] = null
+            battlefieldEnemy[y][x] = null
+        }
+    }
+    for(let size = 4; size > -1; size--){
+        for(let num = 4; num > -1; num--){
+            if(shipInfo[size] && shipInfo[size][num] !== undefined) {
+                shipInfo[size][num] = null
+            }
+        }
+    }
+    playerFieldRender("player")
+    playerFieldRender("enemy")
+}

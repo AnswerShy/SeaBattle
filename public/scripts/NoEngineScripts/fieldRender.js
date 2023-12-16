@@ -2,7 +2,7 @@
     Самое первое, что прогружается на экране, при выборе режима игры.
     Отображение на экране всех частей интерфейса, которые должны присувствовать при игре.
 */
-function generate(player, isGenerated) { 
+function generate(player) { 
     let main = document.body.querySelector(`[player="${player}"]`)
     var html = `<table>`
     for (let y = 9; y >= 0; y--) {
@@ -40,17 +40,37 @@ shipGenerate()
 function playerFieldRender(player) {
     for(let y = 0; y < 10; y++){
         for(let x = 0; x < 10; x++){
+            document.querySelector(`[player="player"]`).querySelector(`td[x="${x}"][y="${y}"]`).classList -= " readyField"
+            document.querySelector(`[player="enemy"]`).querySelector(`td[x="${x}"][y="${y}"]`).classList -= " readyField"
             if (player == "player") {
                 if(battlefield[9-y][x] == "x") {
                     document.querySelector(`[player="player"]`).querySelector(`td[x="${x}"][y="${y}"]`).classList = "shiped"
+                }
+                else {
+                    document.querySelector(`[player="player"]`).querySelector(`td[x="${x}"][y="${y}"]`).classList = ""
                 }
             }
             else if(player == "enemy") {
                 if(battlefieldEnemy[y][x] == "x") {
                     document.querySelector(`[player="enemy"]`).querySelector(`td[x="${x}"][y="${y}"]`).classList = "shiped"
                 }
+                else {
+                    document.querySelector(`[player="enemy"]`).querySelector(`td[x="${x}"][y="${y}"]`).classList = ""
+                }
             }
         }
     }
 }
 
+function readyField(player) {
+    for(let y = 0; y < 10; y++){
+        for(let x = 0; x < 10; x++){
+            if (player == "player" || player == "0") {
+                document.querySelector(`[player="player"]`).querySelector(`td[x="${x}"][y="${y}"]`).classList += " readyField"
+            }
+            else if(player == "enemy" || player == "1") {
+                document.querySelector(`[player="enemy"]`).querySelector(`td[x="${x}"][y="${y}"]`).classList += " readyField"
+            }
+        }
+    }
+}
